@@ -7,6 +7,11 @@
 using namespace std;
 using namespace std::chrono;
 
+struct mobileNum{
+	int value;		
+	int dir;		// -1 for left 1 for right
+};
+
 //function stolen from my paper1
 void printvec(vector<int> m){
 	int len = m.size();
@@ -17,28 +22,13 @@ void printvec(vector<int> m){
 }
 
 //created as void so no return necessary. Pass by referense for ease of use.
-void minChange(vector<int>& curr, vector<int>& rem){
+void johnsonTrotter(vector<mobileNum>& curr){
 
 	//
 	//START OF MIN-CHANGE CODE
 	//
 	
-	// printf(); a test ran cause i accidentally set curr to be done lol
-	
-	int num;
-	
-	if (rem.size() == 0){
-		printvec(curr);
-	}
 
-	for (unsigned long i = 0; i<rem.size(); i++){
-		num = rem[i];
-		vector<int> next_curr = curr;
-        	vector<int> next_rem = rem;
-        	next_curr.push_back(num);
-        	next_rem.erase(next_rem.begin() + i);
-        	minChange(next_curr, next_rem);
-	}
 
 	//
 	//END OF MIN-CHANGE CODE
@@ -52,19 +42,18 @@ int main(){
 	cin >> n;
 	if (n < 0){printf("\nNumber must be greater than 0\n");}
 
-	vector<int> curr;						//current list
-	vector<int> rem;						//remaining list
-									//I used vectors for both since cpp arrays
-									//can be obnoxious and tedious with dynamic
-									//values. vectors simplify things for me
-
+	vector<mobileNum> curr;						//current list
+	
 	for (int i = 0; i<n; i++){
-		rem.push_back(i+1);
+		mobileNum num;
+		num.value = i+1;
+		num.dir = -1;
+		curr.push_back(num);
 	}	
 
 	auto start = high_resolution_clock::now(); 			// start a timer for our algorithm(s)
 
-	minChange(curr, rem);						//this calls the minChange function
+	johnsonTrotter(curr);					//this calls the minChange function
 
 	auto end = high_resolution_clock::now();
 	auto duration = duration_cast<milliseconds>(end - start); 	//end the clock and find the time taken in ms
