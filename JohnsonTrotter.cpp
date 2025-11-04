@@ -36,6 +36,8 @@ void johnsonTrotter(vector<mobileNum>& curr){
 	//
 	//START OF PERMUTATION CODE
 	//	
+	
+	printvec(curr);
 
 	while(true){
 		int mobileVal = -1;
